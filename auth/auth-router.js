@@ -13,33 +13,36 @@ router.post('/register', async (req, res) => {
   if (validateResults.isSuccessful) {
     const hash = bcrypt.hashSync(user.password, 14);
     const hashedUser = {
-      name: user.name,
+      ...user,
       password: hash
     };
 
     try {
       const saved = await Users.addUser(hashedUser);
 
-      switch (role) {
+      let info = {};
+      let roleInfo = {};
+
+      switch (saved.type) {
         case 'admin':
-          const info = {
+          info = {
             user_id: saved.id
           };
-          const roleInfo = await Users.addAdmin(roleInfo);
+          roleInfo = await Users.addAdmin(info);
           break;
         case 'volunteer':
-          const info = {
+          info = {
             user_id: saved.id,
             availability: user.availability,
             country: user.country
           };
-          const roleInfo = await Users.addVolunteer(roleInfo);
+          roleInfo = await Users.addVolunteer(info);
           break;
         case 'student':
-          const info = {
+          info = {
             user_id: saved.id
           };
-          const roleInfo = await Users.addStudent(roleInfo);
+          roleInfo = await Users.addStudent(info);
           break;
         default:
           console.log("\nERROR in POST to /api/auth/register");

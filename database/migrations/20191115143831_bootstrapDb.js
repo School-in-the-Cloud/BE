@@ -3,13 +3,16 @@ exports.up = function (knex) {
     return knex.schema
         .createTable('users', Users => {
             Users.increments();
+            Users.string('username').notNullable();
+            Users.string('password').notNullable();
             Users.string('type', 128).notNullable();
-            Users.string('name', 255).notNullable();
+            Users.string('name').notNullable();
+            Users.string('email').notNullable();
         })
         .createTable('volunteers', Volunteers => {
             Volunteers.increments();
             Volunteers.string('availability', 1024).notNullable();
-            Volunteers.string('country', 255).notNullable();
+            Volunteers.string('country').notNullable();
             Volunteers
                 .integer('user_id')
                 .unsigned()

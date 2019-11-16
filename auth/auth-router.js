@@ -5,21 +5,54 @@ const Users = require('./auth-model');
 const { validateUser, getJwtToken } = require('./auth-helpers');
 
 router.post('/register', async (req, res) => {
-  // implement registration
   let user = req.body;
   const validateResults = validateUser(user);
 
+  const role = user.type;
+
   if (validateResults.isSuccessful) {
     const hash = bcrypt.hashSync(user.password, 14);
-    user = {
-      ...user,
+    const hashedUser = {
+      name: user.name,
       password: hash
     };
 
     try {
-      const saved = await Users.add(user);
+      const saved = await Users.addUser(hashedUser);
+
+      switch (role) {
+        case 'admin':
+          const info = {
+            user_id: saved.id
+          };
+          const roleInfo = await Users.addAdmin(roleInfo);
+          break;
+        case 'volunteer':
+          const info = {
+            user_id: saved.id,
+            availability: user.availability,
+            country: user.country
+          };
+          const roleInfo = await Users.addVolunteer(roleInfo);
+          break;
+        case 'student':
+          const info = {
+            user_id: saved.id
+          };
+          const roleInfo = await Users.addStudent(roleInfo);
+          break;
+        default:
+          console.log("\nERROR in POST to /api/auth/register");
+          console.log(`Role passed to switch statement: ${role}`);
+          res.status(500).json({ message: "Internal server error" });
+      }
+
       const token = getJwtToken(saved.username);
-      res.status(201).json({ user: saved, token });
+      res.status(201).json({
+        user: saved,
+        roleInfo,
+        token
+      });
     } catch (error) {
       console.log(`\nError in POST to /api/auth/register\n${error}\n`);
       res.status(500).json({ message: "Internal server error." });

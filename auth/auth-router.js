@@ -13,8 +13,11 @@ router.post('/register', async (req, res) => {
   if (validateResults.isSuccessful) {
     const hash = bcrypt.hashSync(user.password, 14);
     const hashedUser = {
-      ...user,
-      password: hash
+      username: user.username,
+      password: hash,
+      name: user.name,
+      email: user.email,
+      type: user.type
     };
 
     try {

@@ -3,10 +3,10 @@ exports.up = function (knex) {
     return knex.schema
         .createTable('users', Users => {
             Users.increments();
-            Users.string('username').notNullable();
             Users.string('password').notNullable();
             Users.string('type', 128).notNullable();
-            Users.string('name').notNullable();
+            Users.string('first_name').notNullable();
+            Users.string('last_name').notNullable();
             Users.string('email').notNullable();
         })
         .createTable('volunteers', Volunteers => {

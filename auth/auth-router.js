@@ -13,9 +13,9 @@ router.post('/register', async (req, res) => {
   if (validateResults.isSuccessful) {
     const hash = bcrypt.hashSync(user.password, 14);
     const hashedUser = {
-      username: user.username,
       password: hash,
-      name: user.name,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       type: user.type
     };
@@ -73,13 +73,12 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   // implement login
-  let { username, password } = req.body;
+  let { email, password, type } = req.body;
   try {
-    const user = await Users.findBy({ username }).first();
+    const user = await Users.findBy({ email }).first();
     if (user && bcrypt.compareSync(password, user.password)) {
-      const token = getJwtToken(username);
+      const token = getJwtToken(email, type);
       res.status(200).json({
-        message: `Welcome to the site, ${username}`,
         user,
         token
       });

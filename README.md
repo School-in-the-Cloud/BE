@@ -43,3 +43,29 @@ Response Body:
   "token": string (will be required for protected routes)
 }
 ```
+
+### Login
+POST "/auth/login"
+
+Request Body:
+```
+{
+  "password": string,
+  "email": string
+}
+```
+
+Response Body:
+```
+{
+    "user": {
+    "id": integer (primary key for 'users' table),
+    "password": string (hashed),
+    "type": string,
+    "first_name": string,
+    "last_name": string,
+    "email": string,
+  },
+  "token": string
+}
+```

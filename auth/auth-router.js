@@ -18,6 +18,7 @@ router.post('/register', async (req, res) => {
       last_name: user.last_name,
       email: user.email,
       type: user.type
+      
     };
 
     try {
@@ -38,8 +39,9 @@ router.post('/register', async (req, res) => {
             user_id: saved.id,
             availability: user.availability,
             country: user.country
-          };
-          roleInfo = await Users.addVolunteer(info);
+          }; 
+          // doing .first() to avoid needlessly giving them an array
+          roleInfo = await Users.addVolunteer(info).first();
           break;
         case 'student':
           info = {

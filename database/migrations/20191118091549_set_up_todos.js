@@ -13,7 +13,7 @@ exports.up = function (knex) {
             TodoItems.string('description', 1048).notNullable();
         })
         .table('todos', Todos => {
-            Todos.string('name').notNullable();
+            Todos.string('name');//.notNullable();
         });
 };
 

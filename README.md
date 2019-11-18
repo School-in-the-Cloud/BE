@@ -58,7 +58,7 @@ Request Body:
 Response Body:
 ```
 {
-    "user": {
+  "user": {
     "id": integer (primary key for 'users' table),
     "password": string (hashed),
     "type": string,

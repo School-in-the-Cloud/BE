@@ -20,7 +20,6 @@ Request Body:
 }
 ```
 
-#### Note: I will be changing "roleInfo" to an object, rather than an object within an array, called "role_info"
 Response Body:
 ```
 {
@@ -32,14 +31,13 @@ Response Body:
     "last_name": string,
     "email": string,
   },
-  "roleInfo": [
+  "roleInfo":
     {
       "id": integer (primary key for role table - 'admins', 'volunteers', 'students'),
       "availability": string (volunteers only),
       "country": string (volunteers only),
       "user_id": integer (same as "id" in "user" object above)
-    }
-  ],
+    },
   "token": string (will be required for protected routes)
 }
 ```

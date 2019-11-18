@@ -40,7 +40,6 @@ router.post('/register', async (req, res) => {
             availability: user.availability,
             country: user.country
           };
-          // doing .first() to avoid needlessly giving them an array
           roleInfo = await Users.addVolunteer(info);
           break;
         case 'student':
@@ -58,7 +57,7 @@ router.post('/register', async (req, res) => {
       const token = getJwtToken(saved.username);
       res.status(201).json({
         user: saved,
-        roleInfo,
+        roleInfo: roleInfo[0], // in order to not return an array
         token
       });
     } catch (error) {

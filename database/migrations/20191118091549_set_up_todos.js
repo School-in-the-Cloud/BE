@@ -19,4 +19,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
+        .table('todos', Todos => {
+            Todos.dropColumn('name');
+        })
+        .dropTableIfExists('todo_items');
 };

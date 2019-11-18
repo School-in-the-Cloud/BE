@@ -34,10 +34,23 @@ async function addItem(item) {
     return id;
 }
 
-function find() {
-    return db('todos').join('todo_items', 'todos.id', '=', 'todo_items.todos_id');
+async function find() {
+    // return db('todos').join('todo_items', 'todos.id', '=', 'todo_items.todos_id');
+    const todos = await db('todos');
+    console.log(todos);
+    const todo_items = await db('todo_items');
+    console.log(todo_items);
+    return todos.map(todo => {
+        console.log(todo.id);
+        return {
+            todo_id: todo.id,
+            admin_id: todo.admin_id,
+            volunteer_id: todo.volunteer_id,
+            steps: todo_items.filter(item => item.todos_id === todo.id).map(item => item.description)
+        }
+    })
 }
 
 function findByAdmin(id) {
     return db('todos').join('todo_items', 'todos.id', '=', 'todo_items.todos_id').where({ admin_id: id });
-}
+} 

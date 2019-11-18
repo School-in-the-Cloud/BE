@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const Users = require('../users/users-model');
 
 module.exports = {
     validateUser,
@@ -32,6 +33,10 @@ function validateUser(user) {
 
     if (user.type === 'volunteer' && !(user.availability && user.country)) {
         errors = [...errors, "Volunteers must state country and availability."]
+    }
+
+    if (Users.find({ email: user.email })) {
+        errors = [...errors, "An account with the provided email already exists."]
     }
 
     return {

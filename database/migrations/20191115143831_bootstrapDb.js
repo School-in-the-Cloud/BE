@@ -7,7 +7,7 @@ exports.up = function (knex) {
             Users.string('type', 128).notNullable();
             Users.string('first_name').notNullable();
             Users.string('last_name').notNullable();
-            Users.string('email').notNullable();
+            Users.string('email').notNullable().unique();
         })
         .createTable('volunteers', Volunteers => {
             Volunteers.increments();

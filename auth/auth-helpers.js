@@ -35,7 +35,7 @@ function validateUser(user) {
         errors = [...errors, "Volunteers must state country and availability."]
     }
 
-    if (Users.find({ email: user.email })) {
+    if (Users.find({ email: user.email }).length) {
         errors = [...errors, "An account with the provided email already exists."]
     }
 

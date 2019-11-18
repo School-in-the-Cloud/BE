@@ -20,6 +20,7 @@ Request Body:
 }
 ```
 
+#### Note: I will be changing "roleInfo" to an object, rather than an object within an array, called "role_info"
 Response Body:
 ```
 {

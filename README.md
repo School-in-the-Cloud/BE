@@ -4,7 +4,8 @@ base URL: https://school-in-the-cloud.herokuapp.com/api
 
 ## Authentication
 ### Registration:
-POST /auth/register
+POST "/auth/register"
+
 Request Body:
 ```
 {

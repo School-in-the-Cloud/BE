@@ -25,9 +25,14 @@ function findAdminBy(filter) {
 }
 
 async function findVolunteers() {
-    return db('volunteers').join('users', 'volunteers.user_id', '=', 'users.id');
+    return db('volunteers')
+        .join('users', 'volunteers.user_id', '=', 'users.id')
+        .select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'volunteers.country', 'volunteers.availability');
 
 }
 function findVolunteerBy(filter) {
-    return db('volunteers').where(filter);
+    return db('volunteers')
+        .join('users', 'volunteers.user_id', '=', 'users.id')
+        .where(filter)
+        .select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'volunteers.country', 'volunteers.availability');
 }

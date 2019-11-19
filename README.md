@@ -67,3 +67,43 @@ Response Body:
   "token": string
 }
 ```
+
+## Admins
+ 
+ ### Create To-Do:
+ POST to ``` https://school-in-the-cloud.herokuapp.com/api/admins/:id/todos```
+ where id is the admin's user id.
+
+ Request Body:
+ ```
+{
+    "volunteer_id": number,
+    "name": string,
+    "items": array of strings
+}
+ ```
+
+ Response Body:
+ #### Note: I will change this to return the new todo.
+ {
+   "todo_id": number
+ }
+
+ 
+## Volunteers
+### Get Assigned To-Dos:
+GET to ```https://school-in-the-cloud.herokuapp.com/api/volunteers/:id/todos```
+where id is volunteer's user id.
+
+Response Body:
+```
+[
+  {
+    "todo_id": number,
+    "admin_id": number,
+    "volunteer_id": number,
+    "steps": array of strings
+  },
+  ...
+]
+```

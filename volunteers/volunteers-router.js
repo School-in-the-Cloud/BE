@@ -18,6 +18,27 @@ router.get('/:id/todos', async (req, res) => {
     }
 });
 
+router.get('/filter/', async (req, res) => {
+    const filters = req.query;
+    try {
+        const volunteers = await Users.findVolunteerBy(filters);
+        res.status(200).json(volunteers);
+    } catch (error) {
+        console.log(`\nERROR in GET to /volunteers/filter\n${error}\n`);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const volunteers = await Users.findVolunteers();
+        res.status(200).json(volunteers);
+    } catch (error) {
+        console.log(`\nERROR in GET to /volunteers/\n${error}\n`);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 router.get('/:id/', async (req, res) => {
     const { id } = req.params;
     try {
@@ -29,19 +50,6 @@ router.get('/:id/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
-    try {
-        const volunteers = await Users.findVolunteers();
-        res.status(200).json(volunteers);
-    } catch (error) {
-        console.log(`\nERROR in GET to /volunteers/\n${error}\n`);
-    }
-});
 
-router.get('/filter', async (req, res) => {
-    const queries = req.query;
-    console.log(queries);
-    res.status(200).json(queries);
-})
 
 module.exports = router;

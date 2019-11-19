@@ -27,7 +27,7 @@ router.get('/:id/', async (req, res) => {
         console.log(`\nERROR in GET to /volunteers/:id\n${error}\n`);
         res.status(500).json({ message: "Internal server error." });
     }
-})
+});
 
 router.get('/', async (req, res) => {
     try {
@@ -36,6 +36,12 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.log(`\nERROR in GET to /volunteers/\n${error}\n`);
     }
+});
+
+router.get('/filter', async (req, res) => {
+    const queries = req.query;
+    console.log(queries);
+    res.status(200).json(queries);
 })
 
 module.exports = router;

@@ -44,3 +44,15 @@ filter volunteer by:
 }
 
 CUD todo lists
+
+
+
+TODO:
+11/19
+volunteer filter
+put and delete todo
+
+
+11/20
+migration to add completed, date created, date completed columns to todos
+

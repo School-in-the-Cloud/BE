@@ -46,6 +46,7 @@ async function find() {
             todo_id: todo.id,
             admin_id: todo.admin_id,
             volunteer_id: todo.volunteer_id,
+            name: todo.name,
             steps: todo_items
                 .filter(item => item.todos_id === todo.id)
                 .map(item => item.description)

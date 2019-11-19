@@ -49,9 +49,10 @@ CUD todo lists
 
 TODO:
 11/19
-volunteer filter
 put and delete todo
 GET admins/:id/todos
+migration: add imgurl to volunteers
+add volunteer and admin info to todo response
 
 11/20
 migration to add completed, date created, date completed columns to todos

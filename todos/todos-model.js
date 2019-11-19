@@ -3,7 +3,8 @@ const db = require('../database/dbConfig');
 module.exports = {
     add,
     find,
-    findBy
+    findBy,
+    update
 }
 
 async function add(admin_id, volunteer_id, name, items) {
@@ -49,7 +50,7 @@ async function find() {
             name: todo.name,
             steps: todo_items
                 .filter(item => item.todos_id === todo.id)
-                .map(item => item.description)
+
         }
     })
 }
@@ -74,6 +75,41 @@ async function findBy(filter) {
     } catch (error) {
         return error;
     }
+}
 
+async function update(changes, id) {
+    let todo = {};
+    let count;
+    let temp;
 
+    try {
+        if (changes.name) {
+            count += await db('todos').where({ id }).update({ name: changes.name });
+
+        }
+        if (changes.steps) {
+            console.log("steps: ", changes.steps);
+            // let count = await db('todo_items').where({ todos_id: id }).update({ description: changes.steps });
+            // if (!count) { return count }
+            for (let i = 0; i < changes.steps.length; i++) {
+                try {
+                    temp = await db('todo_items').where({ id: changes.steps[i].id }).update({ description: changes.steps[i].description });
+                    console.log(temp);
+                    count += temp;
+                } catch (error) {
+                    console.log("Error adding step: ", error);
+                }
+
+            }
+
+            // count = await changes.steps.map(async step => {
+            //     const curCount = await db('todo_items').where({ todos_id: id }).update({ description: step });
+            //     return curCount;
+            // }).reduce((acc, cur) => acc + cur, 0);
+        }
+        return count;
+    } catch (error) {
+        console.log(`\nERROR in update todo\n${error}\n`);
+        return error;
+    }
 }

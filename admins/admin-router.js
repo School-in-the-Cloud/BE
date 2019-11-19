@@ -1,17 +1,50 @@
 const router = require('express').Router();
 
-const todos = require('../todos/todos-model');
+const Todos = require('../todos/todos-model');
 
 router.post('/:id/todos', async (req, res) => {
     const admin_id = req.params.id;
     const { volunteer_id, name, items } = req.body;
     console.log(`\nItems:\n${items}\n`);
     try {
-        const { todo_id, items_id } = await todos.add(admin_id, volunteer_id, name, items);
+        const { todo_id, items_id } = await Todos.add(admin_id, volunteer_id, name, items);
         res.status(201).json({ todo_id, items_id });
     } catch (error) {
         console.log(`\nERROR in POST to /admins/:id/todos\n${error}\n`);
         res.status(500).json({ message: "Internal server error." })
+    }
+});
+
+router.put('/:id/todos', async (req, res) => {
+    const changes = req.body;
+    if (!changes) {
+        res.status(400).json({ message: "No changes included in PUT request." });
+    }
+
+    const adminId = req.params.id;
+
+    const id = changes.todo_id;
+    console.log(changes.steps);
+
+    try {
+        const todo = await Todos.findBy({ todo_id: id });
+        if (!todo) {
+            res.status(404).json({ message: "To-do not available at the given id." });
+        }
+        // if (todo.admin_id !== adminId) {
+        // res.status(401).json({ message: "You do not have permission to edit this resource." })
+        // }
+    } catch (error) {
+        console.log(`\nERROR in PUT to /admin/:id/todos\n${error}\n`);
+        res.status(500).json({ message: "Internal server error" });
+    }
+
+    try {
+        const changed = await Todos.update(changes, id);
+        res.status(201).json(changed);
+    } catch (error) {
+        console.log(`\nERROR in PUT to /admin/:id/todos\n${error}\n`);
+        res.status(500).json({ message: "Internal server error" });
     }
 })
 

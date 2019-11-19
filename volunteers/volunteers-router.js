@@ -29,4 +29,13 @@ router.get('/:id/', async (req, res) => {
     }
 })
 
+router.get('/', async (req, res) => {
+    try {
+        const volunteers = await Users.findVolunteers();
+        res.status(200).json(volunteers);
+    } catch (error) {
+        console.log(`\nERROR in GET to /volunteers/\n${error}\n`);
+    }
+})
+
 module.exports = router;

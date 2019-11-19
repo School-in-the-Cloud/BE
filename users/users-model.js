@@ -24,8 +24,9 @@ function findAdminBy(filter) {
     return db('admins').where(filter);
 }
 
-function findVolunteers() {
-    return db('volunteers');
+async function findVolunteers() {
+    return db('volunteers').join('users', 'volunteers.user_id', '=', 'users.id');
+
 }
 function findVolunteerBy(filter) {
     return db('volunteers').where(filter);

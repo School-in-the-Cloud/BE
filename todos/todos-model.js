@@ -3,7 +3,7 @@ const db = require('../database/dbConfig');
 module.exports = {
     add,
     find,
-    findByAdmin
+    findBy
 }
 
 async function add(admin_id, volunteer_id, name, items) {
@@ -37,20 +37,42 @@ async function addItem(item) {
 async function find() {
     // return db('todos').join('todo_items', 'todos.id', '=', 'todo_items.todos_id');
     const todos = await db('todos');
-    console.log(todos);
+    // console.log(todos);
     const todo_items = await db('todo_items');
-    console.log(todo_items);
+    // console.log(todo_items);
     return todos.map(todo => {
-        console.log(todo.id);
+        // console.log(todo.id);
         return {
             todo_id: todo.id,
             admin_id: todo.admin_id,
             volunteer_id: todo.volunteer_id,
-            steps: todo_items.filter(item => item.todos_id === todo.id).map(item => item.description)
+            steps: todo_items
+                .filter(item => item.todos_id === todo.id)
+                .map(item => item.description)
         }
     })
 }
 
-function findByAdmin(id) {
-    return db('todos').join('todo_items', 'todos.id', '=', 'todo_items.todos_id').where({ admin_id: id });
-} 
+async function findBy(filter) {
+    const prop = Object.keys(filter)[0];
+    console.log("Prop: ", prop);
+    const val = Number(filter[prop]);
+    console.log("Val: ", val);
+    try {
+        const todos = await find();
+        // console.log(todos);
+        const filtered = todos.filter(todo => {
+            // console.log("Desired: ", val);
+            // console.log("Actual: ", todo[prop]);
+            // console.log("Difference: ", todo[prop] - val);
+            // console.log("Equality: ", todo[prop] === val);
+            return todo[prop] === val;
+        });
+        // console.log(filtered);
+        return filtered;
+    } catch (error) {
+        return error;
+    }
+
+
+}

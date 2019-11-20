@@ -89,6 +89,28 @@ Response Body:
    "todo_id": number
  }
 
+### Update To-Do
+PUT to ```https://school-in-the-cloud.herokuapp.com/api/admins/:id/todos```
+
+Request Body:
+```
+{
+        "todo_id": integer,
+        "name": new name, string,
+        "steps": [
+            {
+                "id": step id, integer (same as todo_id above),
+                "todos_id": same as todo_id above,
+                "description": new description for step, string
+            },
+            {
+                "id": step_id,
+                "todos_id": integer (same as todo_id above),
+                "description": new description for step, string
+            },
+        ]
+}
+```
  
 ## Volunteers
 ### Get Assigned To-Dos:

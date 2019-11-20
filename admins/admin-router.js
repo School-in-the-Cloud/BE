@@ -7,8 +7,8 @@ router.post('/:id/todos', async (req, res) => {
     const { volunteer_id, name, items } = req.body;
     console.log(`\nItems:\n${items}\n`);
     try {
-        const { todo_id, items_id } = await Todos.add(admin_id, volunteer_id, name, items);
-        res.status(201).json({ todo_id, items_id });
+        const { todos_id, items_id } = await Todos.add(admin_id, volunteer_id, name, items);
+        res.status(201).json({ todos_id, items_id });
     } catch (error) {
         console.log(`\nERROR in POST to /admins/:id/todos\n${error}\n`);
         res.status(500).json({ message: "Internal server error." })
@@ -23,11 +23,11 @@ router.put('/:id/todos', async (req, res) => {
 
     const adminId = req.params.id;
 
-    const id = changes.todo_id;
+    const id = changes.todos_id;
     console.log(changes.steps);
 
     try {
-        const todo = await Todos.findBy({ todo_id: id });
+        const todo = await Todos.findBy({ todos_id: id });
         if (!todo) {
             res.status(404).json({ message: "To-do not available at the given id." });
         }
@@ -48,6 +48,15 @@ router.put('/:id/todos', async (req, res) => {
     }
 })
 
-
+router.get('/:id/todos', async (req, res) => {
+    const admin_id = req.params.id;
+    try {
+        const todos = Todos.findBy({ admin_id });
+        res.status(200).json(todos);
+    } catch (error) {
+        console.log(`\nERROR in GET to /admin/:id/todos\n${error}\n`);
+        res.status(500).json({ message: "Internal server error" });
+    }
+})
 
 module.exports = router;

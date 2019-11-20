@@ -21,7 +21,10 @@ function findAdmins() {
     return db('admins');
 }
 function findAdminBy(filter) {
-    return db('admins').where(filter);
+    return db('admins')
+        .join('users', 'admins.user_id', '=', 'users.id')
+        .select('users.id', 'users.first_name', 'users.last_name', 'users.email')
+        .where(filter);
 }
 
 async function findVolunteers() {
@@ -33,6 +36,6 @@ async function findVolunteers() {
 function findVolunteerBy(filter) {
     return db('volunteers')
         .join('users', 'volunteers.user_id', '=', 'users.id')
-        .where(filter)
-        .select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'volunteers.country', 'volunteers.availability');
+        .select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'volunteers.country', 'volunteers.availability')
+        .where(filter);
 }

@@ -7,7 +7,8 @@ module.exports = {
     find,
     findBy,
     findItem,
-    update
+    update,
+    remove
 }
 
 async function add(admin_id, volunteer_id, name, items) {
@@ -43,54 +44,27 @@ async function findItem(id) {
 }
 
 async function find() {
-    // return db('todos').join('todo_items', 'todos.id', '=', 'todo_items.todos_id');
     const todos = await db('todos');
-    // console.log(todos);
     const todo_items = await db('todo_items');
-    // console.log(todo_items); 
-    // const admins = await db('users').where({ type: 'admin' });
-    // const volunteers = await db('users')
-    //     .join('volunteers', 'users.id', '=', 'volunteers.user_id')
-    //     .where({ type: 'volunteer' });
     const volunteers = await Users.findVolunteers();
     const admins = await Users.findAdmins();
     try {
         const packagedTodos = todos.map(todo => {
-            // console.log(todo.id);
-            try {
-                // const admin = await db('users').where({ id: todo.admin_id })
-                //     .join('admins', 'users.id', '=', 'admins.user_id');
+            const volunteer = volunteers.filter(vol => vol.id === todo.volunteer_id);
+            const admin = admins.filter(adm => adm.id === todo.admin_id);
 
-
-                // const volunteer = await db('users')
-                //     .join('volunteers', 'users.id', '=', 'volunteers.user_id')
-                //     .where({ type: 'volunteer', id: todo.volunteer_id });
-
-                // const volunteer = await Users.findVolunteerBy({ user_id: todo.volunteer_id });
-                // const admin = await Users.findAdminBy({ user_id: todo.admin_id });
-                const volunteer = volunteers.filter(vol => vol.id === todo.volunteer_id);
-                const admin = admins.filter(adm => adm.id === todo.admin_id);
-
-                const todoObj = {
-                    todos_id: todo.id,
-                    admin_id: todo.admin_id,
-                    admin,
-                    volunteer_id: todo.volunteer_id,
-                    volunteer,
-                    name: todo.name,
-                    steps: todo_items
-                        .filter(item => item.todos_id === todo.id)
-                };
-                console.log("Should come first");
-                // console.log(todoObj);
-                return todoObj;
-            } catch (error) {
-                console.log(`\nERROR in find() todos\n${error}\n`);
-                return error;
-            }
+            const todoObj = {
+                todos_id: todo.id,
+                admin_id: todo.admin_id,
+                admin,
+                volunteer_id: todo.volunteer_id,
+                volunteer,
+                name: todo.name,
+                steps: todo_items
+                    .filter(item => item.todos_id === todo.id)
+            };
+            return todoObj;
         });
-        // console.log("Should come second");
-        // // console.log(packagedTodos);
         return packagedTodos;
     } catch (error) {
         console.log(`\nError getting todos\n${error}\n`)
@@ -175,4 +149,10 @@ async function modifyStep(changes) {
         console.log(`\nError modifying step:\n${error}\n`);
         return error;
     }
+}
+
+async function remove(id) {
+    const todo = await db('todos').where({ id }).del();
+    const todoItems = await db('todo_items').where({ todos_id: id }).del();
+    return todo + todoItems;
 }

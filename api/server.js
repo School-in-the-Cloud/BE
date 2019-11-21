@@ -16,8 +16,8 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
-server.use('/api/admins',/* authMiddleware,*/ adminRouter);
-server.use('/api/todos',/* authMiddleware,*/ todosRouter);
-server.use('/api/volunteers',/* authMiddleware,*/ volunteersRouter);
+server.use('/api/admins', authMiddleware, adminRouter);
+server.use('/api/todos', authMiddleware, todosRouter);
+server.use('/api/volunteers', authMiddleware, volunteersRouter);
 
 module.exports = server;

@@ -1,131 +1,60 @@
+<h1 align="center">Welcome to School in the Cloud Backend 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/School-in-the-Cloud/BE#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/School-in-the-Cloud/BE/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/School-in-the-Cloud/BE/blob/master/LICENSE" target="_blank">
+    <img alt="License: GPL" src="https://img.shields.io/github/license/patjonstevenson/School in the Cloud Backend" />
+  </a>
+</p>
 
-# API
-base URL: https://school-in-the-cloud.herokuapp.com/api
+> Backend for School in the Cloud application.
 
-## Authentication
-### Registration:
-POST "/auth/register"
+### 🏠 [Homepage](https://github.com/School-in-the-Cloud/BE#readme)
 
-Request Body:
-```
-{
-  "password": string (8 char min - required),
-  "email": string (must include '@' and '.' - required),
-  "first_name": string (required),
-  "last_name": string (required),
-  "type": string ('admin', 'volunteer', or 'student' - required),
-  "availability": string (required for volunteer),
-  "country": string (required for volunteer)
-  "
-}
-```
+### ✨ [Demo](https://school-in-the-cloud-fe.netlify.com/)
 
-Response Body:
-```
-{
-  "user": {
-    "id": integer (primary key for 'users' table),
-    "password": string (hashed),
-    "type": string,
-    "first_name": string,
-    "last_name": string,
-    "email": string,
-  },
-  "roleInfo":
-    {
-      "id": integer (primary key for role table - 'admins', 'volunteers', 'students'),
-      "availability": string (volunteers only),
-      "country": string (volunteers only),
-      "user_id": integer (same as "id" in "user" object above)
-    },
-  "token": string (will be required for protected routes)
-}
+## Install
+
+```sh
+npm install
 ```
 
-### Login
-POST "/auth/login"
+## Usage
 
-Request Body:
-```
-{
-  "password": string,
-  "email": string
-}
+```sh
+npm run server
 ```
 
-Response Body:
-```
-{
-  "user": {
-    "id": integer (primary key for 'users' table),
-    "password": string (hashed),
-    "type": string,
-    "first_name": string,
-    "last_name": string,
-    "email": string,
-  },
-  "token": string
-}
+## Run tests
+
+```sh
+npm run test
 ```
 
-## Admins
- 
- ### Create To-Do:
- POST to ``` https://school-in-the-cloud.herokuapp.com/api/admins/:id/todos```
- where id is the admin's user id.
+## Author
 
- Request Body:
- ```
-{
-    "volunteer_id": number,
-    "name": string,
-    "items": array of strings
-}
- ```
+👤 **Patrick Stevenson**
 
- Response Body:
- #### Note: I will change this to return the new todo.
- {
-   "todo_id": number
- }
+* Website: patrickjstevenson.com
+* Github: [@patjonstevenson](https://github.com/patjonstevenson)
 
-### Update To-Do
-PUT to ```https://school-in-the-cloud.herokuapp.com/api/admins/:id/todos```
+## 🤝 Contributing
 
-Request Body:
-```
-{
-        "todo_id": integer,
-        "name": new name, string,
-        "steps": [
-            {
-                "id": step id, integer (same as todo_id above),
-                "todos_id": same as todo_id above,
-                "description": new description for step, string
-            },
-            {
-                "id": step_id,
-                "todos_id": integer (same as todo_id above),
-                "description": new description for step, string
-            },
-        ]
-}
-```
- 
-## Volunteers
-### Get Assigned To-Dos:
-GET to ```https://school-in-the-cloud.herokuapp.com/api/volunteers/:id/todos```
-where id is volunteer's user id.
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/School-in-the-Cloud/BE/issues).
 
-Response Body:
-```
-[
-  {
-    "todo_id": number,
-    "admin_id": number,
-    "volunteer_id": number,
-    "steps": array of strings
-  },
-  ...
-]
-```
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2019 [Patrick Stevenson](https://github.com/patjonstevenson).<br />
+This project is [GPL](https://github.com/School-in-the-Cloud/BE/blob/master/LICENSE) licensed.
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

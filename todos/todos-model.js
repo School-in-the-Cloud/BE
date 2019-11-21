@@ -52,7 +52,7 @@ async function find() {
         const packagedTodos = todos.map(todo => {
             const volunteer = volunteers.filter(vol => vol.id === todo.volunteer_id);
             const admin = admins.filter(adm => adm.id === todo.admin_id);
-
+            console.log("In find(), is_completed: ", todo.is_completed);
             const todoObj = {
                 todos_id: todo.id,
                 admin_id: todo.admin_id,
@@ -60,6 +60,7 @@ async function find() {
                 volunteer_id: todo.volunteer_id,
                 volunteer,
                 name: todo.name,
+                is_completed: Boolean(todo.is_completed),
                 steps: todo_items
                     .filter(item => item.todos_id === todo.id)
             };
@@ -100,6 +101,13 @@ async function update(changes, id) {
     let temp;
 
     try {
+        if (Object.keys(changes).includes("is_completed")) {
+            // console.log("is_completed: ", changes.is_completed);
+            const completed = changes.is_completed ? 1 : 0;
+            const comp = await db('todo_items').select('*').where({ todos_id: id });
+            console.log(comp);
+            count += await db('todos').where({ id }).update({ is_completed: completed });
+        }
         if (changes.name) {
             console.log("ID: ", id);
             count += await db('todos').where({ id }).update({ name: changes.name });

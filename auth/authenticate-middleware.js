@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(req);
   console.log(`\nAuthentication Token Provided:\n${token}\n`);
   console.log(`\nHeaders:\n${req.headers.toString()}\n`);
 
@@ -19,6 +18,7 @@ module.exports = (req, res, next) => {
         res.status(401).json({ message: "Permission denied. Invalid credentials." });
       } else {
         req.decodedJwt = decodedToken;
+        
         next();
       }
     });

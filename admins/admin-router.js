@@ -49,9 +49,10 @@ router.put('/:id/todos', async (req, res) => {
 })
 
 router.get('/:id/todos', async (req, res) => {
-    const admin_id = req.params.id;
+    const { id } = req.params;
+    console.log("Admin Id: ", id);
     try {
-        const todos = Todos.findBy({ admin_id });
+        const todos = await Todos.findBy({ admin_id: id });
         res.status(200).json(todos);
     } catch (error) {
         console.log(`\nERROR in GET to /admin/:id/todos\n${error}\n`);

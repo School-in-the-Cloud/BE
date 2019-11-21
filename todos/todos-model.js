@@ -52,7 +52,7 @@ async function find() {
         const packagedTodos = todos.map(todo => {
             const volunteer = volunteers.filter(vol => vol.id === todo.volunteer_id);
             const admin = admins.filter(adm => adm.id === todo.admin_id);
-            console.log("In find(), is_completed: ", todo.is_completed);
+            // console.log("In find(), is_completed: ", todo.is_completed);
             const todoObj = {
                 todos_id: todo.id,
                 admin_id: todo.admin_id,

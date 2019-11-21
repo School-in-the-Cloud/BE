@@ -10,7 +10,7 @@ router.get('/:id/todos', async (req, res) => {
 
     try {
         const todos = await Todos.findBy({ volunteer_id: id });
-        console.log(todos);
+        // console.log(todos);
         res.status(200).json(todos);
     } catch (error) {
         console.log(`\nERROR in GET to /volunteers/:id/todos\n${error}\n`);

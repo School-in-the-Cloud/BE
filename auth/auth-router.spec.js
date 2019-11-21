@@ -7,8 +7,11 @@ describe('auth router', () => {
         it('should respond with a token given complete user information',
             async () => {
                 const info = {
-                    username: `testingUser${new Date()}`,
-                    password: "testingPassword"
+                    email: `testingUser${new Date()}@mail.com`,
+                    password: "testingPassword",
+                    type: 'student',
+                    first_name: 'first',
+                    last_name: 'last'
                 };
 
                 const newUser = await request(server).post('/api/auth/register').send(info);
@@ -19,8 +22,11 @@ describe('auth router', () => {
         it('should include the provided username in the response',
             async () => {
                 const info = {
-                    username: `testingUser${new Date()}`,
-                    password: "testingPassword"
+                    email: `testingUser${new Date()}@mail.com`,
+                    password: "testingPassword",
+                    type: 'student',
+                    first_name: 'first',
+                    last_name: 'last'
                 };
 
                 const newUser = await request(server).post('/api/auth/register').send(info);
@@ -32,8 +38,11 @@ describe('auth router', () => {
         it('should include an id in the user object',
             async () => {
                 const info = {
-                    username: `testingUser${new Date()}`,
-                    password: "testingPassword"
+                    email: `testingUser${new Date()}@mail.com`,
+                    password: "testingPassword",
+                    type: 'student',
+                    first_name: 'first',
+                    last_name: 'last'
                 };
 
                 const newUser = await request(server).post('/api/auth/register').send(info);
@@ -46,13 +55,20 @@ describe('auth router', () => {
         it('should include an id in the user object',
             async () => {
                 const info = {
-                    username: `testingUser${new Date()}`,
-                    password: "testingPassword"
+                    email: `testingUser${new Date()}@mail.com`,
+                    password: "testingPassword",
+                    type: 'student',
+                    first_name: 'first',
+                    last_name: 'last'
+                };
+                const creds = {
+                    email: info.email,
+                    password: info.password
                 };
 
                 const newUser = await request(server).post('/api/auth/register').send(info);
 
-                const loggedIn = await request(server).post('/api/auth/login').send(info);
+                const loggedIn = await request(server).post('/api/auth/login').send(creds);
 
                 return expect(loggedIn.body.user.id).toBeDefined();
             }
@@ -61,12 +77,19 @@ describe('auth router', () => {
         it('should respond with a token given correct user information',
             async () => {
                 const info = {
-                    username: `testingUser${new Date()}`,
-                    password: "testingPassword"
+                    email: `testingUser${new Date()}@mail.com`,
+                    password: "testingPassword",
+                    type: 'student',
+                    first_name: 'first',
+                    last_name: 'last'
+                };
+                const creds = {
+                    email: info.email,
+                    password: info.password
                 };
 
                 const newUser = await request(server).post('/api/auth/register').send(info);
-                const loggedIn = await request(server).post('/api/auth/login').send(info);
+                const loggedIn = await request(server).post('/api/auth/login').send(creds);
                 return expect(loggedIn.body).toHaveProperty("token");
             }
         );

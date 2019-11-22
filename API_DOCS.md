@@ -146,6 +146,8 @@ Response Body (example):
 }
 ```
 
+### Delete To-Do
+DELETE to ```https://school-in-the-cloud.herokuapp.com/api/todos/:id/```
 
 ## Admins
  
@@ -192,9 +194,6 @@ Request Body:
 }
 ```
 
-### Delete To-Do
-DELETE to ```https://school-in-the-cloud.herokuapp.com/api/admins/:id/todos```
- 
 ## Volunteers
 ### Get Assigned To-Dos:
 GET to ```https://school-in-the-cloud.herokuapp.com/api/volunteers/:id/todos```

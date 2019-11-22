@@ -191,6 +191,9 @@ Request Body:
         ]
 }
 ```
+
+### Delete To-Do
+DELETE to ```https://school-in-the-cloud.herokuapp.com/api/admins/:id/todos```
  
 ## Volunteers
 ### Get Assigned To-Dos:
@@ -221,7 +224,7 @@ Request Body (example):
 }
 ```
 
-### Get Volunteer Info:
+### Get Volunteers:
 GET to ```http://school-in-the-cloud.herokuapp.com/api/volunteers/```
 
 Response Body (example):
@@ -250,6 +253,23 @@ Response Body (example):
         "email": "patrick195@testing.com",
         "country": "Mexico",
         "availability": "Afternoons"
+    }
+]
+```
+
+### Get Volunteer By ID:
+GET TO ```https://school-in-the-cloud.herokuapp.com/api/volunteers/:id/```
+
+Response Body (example):
+```
+[
+    {
+        "id": 2,
+        "password": "$2a$14$jQlzON2saF045p1UwnmQTOZ3LoSPy0bDhPpX24a/Fd9ItXjWP6Bw6",
+        "type": "volunteer",
+        "first_name": "Patrick",
+        "last_name": "New Last Name",
+        "email": "patrick144@testing.com"
     }
 ]
 ```

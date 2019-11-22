@@ -50,6 +50,17 @@ router.get('/:id/', async (req, res) => {
     }
 });
 
+router.put('/:id/', async (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+    try {
+        const changed = await Users.updateVolunteer(changes, id);
+        res.status(201).json(changed);
+    } catch (error) {
+        console.log(`\nERROR in PUT to /volunteers/:id\n${error}\n`);
+        res.status(500).json({ message: "Internal server error." });
+    }
+})
 
 
 module.exports = router;

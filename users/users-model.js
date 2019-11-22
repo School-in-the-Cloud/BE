@@ -6,7 +6,8 @@ module.exports = {
     findAdmins,
     findAdminBy,
     findVolunteers,
-    findVolunteerBy
+    findVolunteerBy,
+    updateVolunteer
 }
 
 function find() {
@@ -38,4 +39,47 @@ function findVolunteerBy(filter) {
         .join('users', 'volunteers.user_id', '=', 'users.id')
         .select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'volunteers.country', 'volunteers.availability')
         .where(filter);
+}
+
+async function updateVolunteer(changes, id) {
+    let userChanges = {};
+    if (changes.first_name) {
+        userChanges.first_name = changes.first_name;
+    }
+    if (changes.last_name) {
+        userChanges.last_name = changes.last_name;
+    }
+    if (changes.email) {
+        userChanges.email = changes.email;
+    }
+    if (changes.first_name || changes.last_name || changes.email) {
+        console.log("userChanges: ", userChanges);
+        try {
+            const changedUser = await db('users').update(userChanges).where({ id });
+        } catch (error) {
+            console.log(`\nERROR in updateVolunteer:\n${error}\n`);
+            return null;
+        }
+    }
+
+    let volunteerChanges = {};
+    if (changes.availability) {
+        volunteerChanges.availability = changes.availability;
+    }
+    if (changes.country) {
+        volunteerChanges.country = changes.country;
+    }
+    if (changes.availability || changes.country) {
+        console.log("volunteerChanges: ", volunteerChanges);
+        try {
+            const changedVolunteer = await db('volunteers').update(volunteerChanges).where({ user_id: id });
+        } catch (error) {
+            console.log(`\nERROR in updateVolunteer:\n${error}\n`);
+            return null;
+        }
+    }
+    if (!userChanges && !volunteerChanges) {
+        return null;
+    }
+    return 1;
 }

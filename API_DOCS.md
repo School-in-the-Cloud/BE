@@ -68,6 +68,85 @@ Response Body:
 }
 ```
 
+## To-Dos
+
+### Get To-Dos
+GET to ```https://school-in-the-cloud.herokuapp.com/api/todos/```
+
+Response Body (example):
+```
+[{
+        "todos_id": 21,
+        "admin_id": 1,
+        "admin": [
+            {
+                "id": 1,
+                "user_id": 1
+            }
+        ],
+        "volunteer_id": 1,
+        "volunteer": [],
+        "name": "test 3 todo",
+        "is_completed": false,
+        "steps": [
+            {
+                "id": 13,
+                "todos_id": 21,
+                "description": "step 1 of test"
+            },
+            {
+                "id": 14,
+                "todos_id": 21,
+                "description": "step 2 of test"
+            },
+            {
+                "id": 15,
+                "todos_id": 21,
+                "description": "step 3 of test"
+            }
+        ]
+},...]
+```
+
+### Get To-Do By ID
+GET to ```https://school-in-the-cloud.herokuapp.com/api/todos/:id```
+
+Response Body (example):
+```
+{
+    "todos_id": 21,
+    "admin_id": 1,
+    "admin": [
+        {
+            "id": 1,
+            "user_id": 1
+        }
+    ],
+    "volunteer_id": 1,
+    "volunteer": [],
+    "name": "test 3 todo",
+    "is_completed": false,
+    "steps": [
+        {
+            "id": 13,
+            "todos_id": 21,
+            "description": "step 1 of test"
+        },
+        {
+            "id": 14,
+            "todos_id": 21,
+            "description": "step 2 of test"
+        },
+        {
+            "id": 15,
+            "todos_id": 21,
+            "description": "step 3 of test"
+        }
+    ]
+}
+```
+
+
 ## Admins
  
  ### Create To-Do:
@@ -84,10 +163,11 @@ Response Body:
  ```
 
  Response Body:
- #### Note: I will change this to return the new todo.
+ ```
  {
    "todo_id": number
  }
+```
 
 ### Update To-Do
 PUT to ```https://school-in-the-cloud.herokuapp.com/api/admins/:id/todos```
@@ -129,3 +209,51 @@ Response Body:
   ...
 ]
 ```
+
+### Update Volunteer Info:
+PUT to ```https://school-in-the-cloud.herokuapp.com/api/volunteers/:id```
+
+Request Body (example):
+```
+{
+  "last_name": "New Last Name",
+  "availability": "Night"
+}
+```
+
+### Get Volunteer Info:
+GET to ```http://school-in-the-cloud.herokuapp.com/api/volunteers/```
+
+Response Body (example):
+```
+[
+    {
+        "id": 2,
+        "first_name": "Patrick",
+        "last_name": "New Last Name",
+        "email": "patrick144@testing.com",
+        "country": "Mexico",
+        "availability": "Night"
+    },
+    {
+        "id": 3,
+        "first_name": "Patrick",
+        "last_name": "Testing",
+        "email": "patrick185@testing.com",
+        "country": "Mexico",
+        "availability": "Afternoons"
+    },
+    {
+        "id": 4,
+        "first_name": "Patrick",
+        "last_name": "Testing",
+        "email": "patrick195@testing.com",
+        "country": "Mexico",
+        "availability": "Afternoons"
+    }
+]
+```
+
+### Get Volunteers with Filter
+
+GET to (example) ```http://school-in-the-cloud.herokuapp.com/api/volunteers/filter?country=Mexico```

@@ -31,9 +31,6 @@ router.put('/:id/todos', async (req, res) => {
         if (!todo) {
             res.status(404).json({ message: "To-do not available at the given id." });
         }
-        // if (todo.admin_id !== adminId) {
-        // res.status(401).json({ message: "You do not have permission to edit this resource." })
-        // }
     } catch (error) {
         console.log(`\nERROR in PUT to /admin/:id/todos\n${error}\n`);
         res.status(500).json({ message: "Internal server error" });

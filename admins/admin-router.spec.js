@@ -13,7 +13,6 @@ describe('admin router', () => {
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NzQzNTY3NjcsImV4cCI6MTU3NDk2MTU2N30.WVh68htd7buX4LJ1NZ_CoMgWwHw9Ap-52x27ekRtGOs";
             const res = await request(server).get('/api/admins/1/todos').set({ Authorization: token });
             const firstTodo = res.body[0];
-            console.log(firstTodo);
             expect(firstTodo.todos_id).toBeDefined();
         });
         it('should respond with todos only having admin id', async () => {
@@ -21,8 +20,7 @@ describe('admin router', () => {
             const res = await request(server).get('/api/admins/1/todos').set({ Authorization: token });
             const todos = res.body;
             const filtered = todos.filter(todo => todo.admin_id !== 1);
-            console.log("Testing id: ", todos);
-            expect(filtered.length).toBe(0);
+            expect(filtered.length).toBe(0);    
         });
     });
     describe('POST to /:id/todos', () => {

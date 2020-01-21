@@ -53,7 +53,6 @@ async function updateVolunteer(changes, id) {
         userChanges.email = changes.email;
     }
     if (changes.first_name || changes.last_name || changes.email) {
-        console.log("userChanges: ", userChanges);
         try {
             const changedUser = await db('users').update(userChanges).where({ id });
         } catch (error) {
@@ -70,7 +69,6 @@ async function updateVolunteer(changes, id) {
         volunteerChanges.country = changes.country;
     }
     if (changes.availability || changes.country) {
-        console.log("volunteerChanges: ", volunteerChanges);
         try {
             const changedVolunteer = await db('volunteers').update(volunteerChanges).where({ user_id: id });
         } catch (error) {

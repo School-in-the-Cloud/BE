@@ -48,12 +48,15 @@ CUD todo lists
 
 
 TODO:
-11/19
-put and delete todo
-GET admins/:id/todos
 migration: add imgurl to volunteers
-add volunteer and admin info to todo response
+migration: add completed to todos and todo_items
+SET UP AUTHENTICATION MIDDLEWARE
+=> PUT ON THE ENDPOINTS
+SET UP MIDDLEWARE TO CHECK USER TYPE
+=> PUT ON THE ENDPOINTS
+TESTING
+edit volunteer profiles
 
-11/20
+
 migration to add completed, date created, date completed columns to todos
 

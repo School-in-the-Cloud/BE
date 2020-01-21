@@ -19,14 +19,12 @@ describe('todos router', () => {
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NzQzNTY3NjcsImV4cCI6MTU3NDk2MTU2N30.WVh68htd7buX4LJ1NZ_CoMgWwHw9Ap-52x27ekRtGOs";
             const res = await request(server).get('/api/todos/12').set({ Authorization: token });
             const firstTodo = res.body;
-            console.log(firstTodo);
             expect(firstTodo.todos_id).toBeDefined();
         });
         it('should respond with todos only having provided id', async () => {
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NzQzNTY3NjcsImV4cCI6MTU3NDk2MTU2N30.WVh68htd7buX4LJ1NZ_CoMgWwHw9Ap-52x27ekRtGOs";
             const res = await request(server).get('/api/todos/12').set({ Authorization: token });
             const todo = res.body;
-            // console.log("Testing id: ", todos);
             expect(todo.todos_id).toBe(12);
         });
     });
@@ -40,7 +38,6 @@ describe('todos router', () => {
                 is_completed: true
             };
             const newTodoId = await request(server).post('/api/admin/1/todos').set({ Authorization: token }).send(todo);
-            // const toBeDeleted = await request(server).get(`/api/todos/${newTodoId}`).set({Authorization: token});
             const res = await request(server).delete(`/api/todos/${newTodoId}`).set({ Authorization: token });
             const shouldBeDeleted = await request(server).get(`/api/todos/${newTodoId}`).set({ Authorization: token });
             expect(shouldBeDeleted.status).toBe(404);
@@ -54,7 +51,6 @@ describe('todos router', () => {
                 is_completed: true
             };
             const newTodoId = await request(server).post('/api/admin/1/todos').set({ Authorization: token }).send(todo);
-            // const toBeDeleted = await request(server).get(`/api/todos/${newTodoId}`).set({Authorization: token});
             const res = await request(server).delete(`/api/todos/${newTodoId}`).set({ Authorization: token });
             expect(res.status).toBe(200);
         });
